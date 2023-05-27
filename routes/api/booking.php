@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Booking\OfferController;
 use App\Http\Controllers\Booking\ProviderController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,6 +13,7 @@ Route::prefix('booking')->group(function () {
      */
 
     Route::apiResources([
-        'providers' => ProviderController::class
+        'offers' => OfferController::class,
+        'providers' => ProviderController::class,
     ]);
 });
