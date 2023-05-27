@@ -18,7 +18,7 @@ class UserResponse extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'role' => new RoleResponse($this->role)
+            'roles' => RoleResponse::collection($this->roles)
         ];
     }
 }

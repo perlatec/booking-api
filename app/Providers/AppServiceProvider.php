@@ -20,8 +20,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
 
         JsonResource::withoutWrapping();
+        $this->loadMigrationsFrom([
+            database_path('migrations'),
+            database_path('migrations/booking'),
+        ]);
     }
 }

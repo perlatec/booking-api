@@ -38,7 +38,11 @@ class ProviderController extends Controller
      */
     public function store(Request $request): ProviderResponse
     {
-        $validator = $this->validate($request, []);
+        $validator = $this->validate($request, [
+            'name' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'api_token' => ['required', 'string'],
+        ]);
 
         $provider = Provider::create($validator);
 
@@ -63,7 +67,11 @@ class ProviderController extends Controller
      */
     public function update(Request $request, Provider $provider): ProviderResponse
     {
-        $validator = $this->validate($request, []);
+        $validator = $this->validate($request, [
+            'name' => ['nullable', 'string'],
+            'description' => ['nullable', 'string'],
+            'api_token' => ['nullable', 'string'],
+        ]);
 
         $provider->update($validator);
 

@@ -52,8 +52,8 @@ class OfferController extends Controller
             'max_adults' => ['required', 'integer', 'min:0'],
             'max_childs' => ['required', 'integer', 'min:0'],
             // Price
-            'price_adult' => ['required', 'decimal', 'min:0'],
-            'price_child' => ['required', 'decimal', 'min:0'],
+            'price_adult' => ['required', 'decimal:0,2', 'min:0'],
+            'price_child' => ['required', 'decimal:0,2', 'min:0'],
         ]);
 
         $offer = Offer::create($validator);
@@ -92,8 +92,8 @@ class OfferController extends Controller
             'max_adults' => ['nullable', 'integer', 'min:0'],
             'max_childs' => ['nullable', 'integer', 'min:0'],
             // Price
-            'price_adult' => ['nullable', 'decimal', 'min:0'],
-            'price_child' => ['nullable', 'decimal', 'min:0'],
+            'price_adult' => ['nullable', 'decimal:0,2', 'min:0'],
+            'price_child' => ['nullable', 'decimal:0,2', 'min:0'],
         ]);
 
         $offer->update($validator);
