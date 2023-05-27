@@ -110,4 +110,40 @@ class OfferController extends Controller
     {
         return $offer->delete();
     }
+
+    /**
+     * -----------------------------------------
+     *	Custom endpoints
+     * -----------------------------------------
+     */
+
+    public function filter(Request $request): AnonymousResourceCollection
+    {
+        $validator = $this->validate($request, [
+            'name' => ['nullable', 'string'],
+            'description' => ['nullable', 'string'],
+            'type' => ['nullable', 'string'],
+            // Capacity
+            'max_adults' => ['nullable', 'integer', 'min:0'],
+            'max_childs' => ['nullable', 'integer', 'min:0'],
+            // Price
+            'price_adult' => ['nullable', 'decimal:0,2', 'min:0'],
+            'price_child' => ['nullable', 'decimal:0,2', 'min:0'],
+        ]);
+
+        $qry = Offer::query();
+
+        if (array_key_exists('name', $validator))
+            $qry = $qry->where('name', 'like', '%' . $validator['name'] . '%');
+        if (array_key_exists('max_adults', $validator))
+            $qry = $qry->where('max_adults', '<=', $validator['max_adults']);
+        if (array_key_exists('max_childs', $validator))
+            $qry = $qry->where('max_childs', '<=', $validator['max_childs']);
+        if (array_key_exists('price_adult', $validator))
+            $qry = $qry->where('price_adult', '<=', $validator['price_adult']);
+        if (array_key_exists('price_child', $validator))
+            $qry = $qry->where('price_child', '<=', $validator['price_child']);
+
+        return OfferResponse::collection($qry->simplePaginate(Constants::ELEMENTS_PER_PAGE));
+    }
 }

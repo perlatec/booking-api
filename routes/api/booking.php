@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('booking')->group(function () {
 
+    Route::prefix('offers')->group(function () {
+        Route::get('filter', [OfferController::class, 'filter']);
+    });
+
     /**
      * -----------------------------------------
      *	JsonResources
