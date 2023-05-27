@@ -8,6 +8,13 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class OfferResponse extends JsonResource
 {
     /**
+     * The "data" wrapper that should be applied.
+     *
+     * @var string|null
+     */
+    public static $wrap = 'offer';
+
+    /**
      * Transform the resource into an array.
      *
      * @return array<string, mixed>
