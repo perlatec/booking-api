@@ -1,0 +1,82 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ namespacedModel }};
+use App\Http\Resources\{{ model }}Response;
+use {{ rootNamespace }}Http\Controllers\Controller;
+use App\Enums\Constants;
+use {{ namespacedRequests }}
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+
+
+class {{ class }} extends Controller
+{
+    /**
+     * UserController constructor
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum']);
+        $this->authorizeResource({{ model }}::class, 'model');
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(): AnonymousResourceCollection
+    {
+        return {{ model }}Response::collection(
+            {{ model }}::query()->simplePaginate(Constants::ELEMENTS_PER_PAGE)
+        );
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     * @param Request $request
+     * @return {{ model }}Response
+     */
+    public function store(Request $request): {{ model }}Response
+    {
+        $validator = $this->validate($request, []);
+
+        $model = {{ model }}::create($validator);
+
+        return new {{ model }}Response($model);
+    }
+
+    /**
+     * Show the specified resource.
+     * @param {{ model }} $model
+     * @return {{ model }}Response
+     */
+    public function show({{ model }} $model): {{ model }}Response
+    {
+        return new {{ model }}Response($model);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     * @param Request $request
+     * @param {{ model }} $model
+     * @return {{ model }}Response
+     */
+    public function update(Request $request, {{ model }} $model): {{ model }}Response
+    {
+        $validator = $this->validate($request, []);
+
+        $model->update($validator);
+
+        return new {{ model }}Response($model);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * @param {{ model }} $model
+     * @return Response
+     */
+    public function destroy({{ model }} $model): bool|null
+    {
+        return $model->delete();
+    }
+}
